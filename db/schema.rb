@@ -10,10 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_21_171542) do
+ActiveRecord::Schema.define(version: 2019_11_21_210414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "rating"
+    t.bigint "day_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["day_id"], name: "index_activities_on_day_id"
+  end
+
+  create_table "days", force: :cascade do |t|
+    t.string "date"
+    t.text "note"
+    t.integer "rating"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_days_on_user_id"
+  end
+
+  create_table "dreams", force: :cascade do |t|
+    t.text "description"
+    t.integer "rating"
+    t.bigint "sleep_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sleep_id"], name: "index_dreams_on_sleep_id"
+  end
+
+  create_table "sleeps", force: :cascade do |t|
+    t.string "start_day"
+    t.string "start_time"
+    t.string "end_day"
+    t.string "end_time"
+    t.text "note"
+    t.integer "rating"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_sleeps_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -22,4 +64,8 @@ ActiveRecord::Schema.define(version: 2019_11_21_171542) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "activities", "days"
+  add_foreign_key "days", "users"
+  add_foreign_key "dreams", "sleeps"
+  add_foreign_key "sleeps", "users"
 end
