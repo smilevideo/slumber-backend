@@ -1,17 +1,5 @@
 class DreamsController < ApplicationController
-  before_action :set_dream, only: [:show, :update, :destroy]
-
-  # GET /dreams
-  def index
-    @dreams = Dream.all
-
-    render json: @dreams
-  end
-
-  # GET /dreams/1
-  def show
-    render json: @dream
-  end
+  before_action :set_dream, only: [:update, :destroy]
 
   # POST /dreams
   def create
@@ -26,7 +14,7 @@ class DreamsController < ApplicationController
 
   # PATCH/PUT /dreams/1
   def update
-    if @dream.update(dream_params)
+    if @dream.sleep.user_id == current_user.id && @dream.update(dream_params)
       render json: @dream
     else
       render json: @dream.errors, status: :unprocessable_entity
@@ -35,7 +23,11 @@ class DreamsController < ApplicationController
 
   # DELETE /dreams/1
   def destroy
-    @dream.destroy
+    if @dream.sleep.user_id == current_user.id
+      @dream.destroy
+    else
+      render json: @dream.errors, status: :unprocessable_entity
+    end
   end
 
   private

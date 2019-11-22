@@ -1,17 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:show, :update, :destroy]
-
-  # GET /activities
-  def index
-    @activities = Activity.all
-
-    render json: @activities
-  end
-
-  # GET /activities/1
-  def show
-    render json: @activity
-  end
+  before_action :set_activity, only: [:update, :destroy]
 
   # POST /activities
   def create
@@ -26,7 +14,7 @@ class ActivitiesController < ApplicationController
 
   # PATCH/PUT /activities/1
   def update
-    if @activity.update(activity_params)
+    if @activity.day.user_id == current_user.id && @activity.update(activity_params)
       render json: @activity
     else
       render json: @activity.errors, status: :unprocessable_entity
@@ -35,7 +23,11 @@ class ActivitiesController < ApplicationController
 
   # DELETE /activities/1
   def destroy
-    @activity.destroy
+    if @activity.day.user_id == current_user.id
+      @activity.destroy
+    else
+      render json: @activity.errors, status: :unprocessable_entity
+    end
   end
 
   private

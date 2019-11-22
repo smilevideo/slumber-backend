@@ -1,21 +1,11 @@
 class SleepsController < ApplicationController
-  before_action :set_sleep, only: [:show, :update, :destroy]
-
-  # GET /sleeps
-  def index
-    @sleeps = Sleep.all
-
-    render json: @sleeps
-  end
-
-  # GET /sleeps/1
-  def show
-    render json: @sleep
-  end
+  before_action :set_sleep, only: [:update, :destroy]
 
   # POST /sleeps
   def create
-    @sleep = Sleep.new(sleep_params)
+    final_params = sleep_params
+    final_params['user_id'] = current_user.id
+    @sleep = Sleep.new(final_params)
 
     if @sleep.save
       render json: @sleep, status: :created, location: @sleep
@@ -26,7 +16,7 @@ class SleepsController < ApplicationController
 
   # PATCH/PUT /sleeps/1
   def update
-    if @sleep.update(sleep_params)
+    if @sleep.user_id == current_user.id && @sleep.update(sleep_params)
       render json: @sleep
     else
       render json: @sleep.errors, status: :unprocessable_entity
@@ -35,7 +25,12 @@ class SleepsController < ApplicationController
 
   # DELETE /sleeps/1
   def destroy
-    @sleep.destroy
+    if @sleep.user_id == current_user.id
+      @sleep.dreams.destroy_all
+      @sleep.destroy
+    else
+      render json: @sleep.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -46,6 +41,6 @@ class SleepsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sleep_params
-      params.require(:sleep).permit(:start_day, :start_time, :end_day, :end_time, :note, :rating, :user_id)
+      params.require(:sleep).permit(:start_day, :start_time, :end_day, :end_time, :note, :rating)
     end
 end
