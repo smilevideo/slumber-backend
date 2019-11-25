@@ -5,12 +5,12 @@ class SleepsController < ApplicationController
   def create
     final_params = sleep_params
     final_params['user_id'] = current_user.id
-    @sleep = Sleep.new(final_params)
+    @sleep = Sleep.create(final_params)
 
-    if @sleep.save
-      render json: @sleep, status: :created, location: @sleep
+    if @sleep.valid?
+      render json: { sleep: SleepSerializer.new(@sleep)}, status: :created
     else
-      render json: @sleep.errors, status: :unprocessable_entity
+      render json: { error: 'failed to create sleep' }, status: :not_acceptable
     end
   end
 
