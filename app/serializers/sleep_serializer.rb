@@ -1,5 +1,5 @@
 class SleepSerializer < ActiveModel::Serializer
-  attributes :start_day, :start_time, :end_day, :end_time, :note, :rating, :dreams
+  attributes :id, :start_day, :start_time, :end_day, :end_time, :note, :rating, :dreams
 
   def dreams
     ActiveModel::SerializableResource.new(

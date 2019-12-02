@@ -38,6 +38,6 @@ class DreamsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def dream_params
-      params.require(:dream).permit(:description, :rating, :sleep_id)
+      params.require(:dream).permit(:mood, :rating, :sleep_id)
     end
 end
