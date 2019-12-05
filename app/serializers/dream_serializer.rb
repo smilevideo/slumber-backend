@@ -1,3 +1,3 @@
 class DreamSerializer < ActiveModel::Serializer
-  attributes :description, :mood
+  attributes :id, :description, :mood
 end
