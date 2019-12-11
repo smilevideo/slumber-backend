@@ -11,15 +11,21 @@ Sleep.destroy_all();
 User.destroy_all();
 
 andrew = User.create({
-    username: 'andrew',
+    username: 'seed_user',
     password: 'password'
 });
 
+# returns a string of the date of the input number of days before today
+def generate_date_string (days) 
+    date = Date.today - days;
+    return "#{date.year}-#{date.month}-#{date.day}";
+end
+
 back1days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-12-04',
+    start_day: generate_date_string(2),
     start_time: '23:30',
-    end_day: '2019-12-05',
+    end_day: generate_date_string(1),
     end_time: '06:00',
     note: "meh\ncould've used more",
     rating: 3
@@ -33,9 +39,9 @@ Dream.create({
 
 back2days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-12-03',
+    start_day: generate_date_string(3),
     start_time: '22:30',
-    end_day: '2019-12-04',
+    end_day: generate_date_string(2),
     end_time: '05:00',
     note: "not too much energy afterwards",
     rating: 2
@@ -49,9 +55,9 @@ Dream.create({
 
 back3days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-12-02',
+    start_day: generate_date_string(4),
     start_time: '23:00',
-    end_day: '2019-12-03',
+    end_day: generate_date_string(3),
     end_time: '07:00',
     note: "fully rested-feels great",
     rating: 5
@@ -65,9 +71,9 @@ Dream.create({
 
 back4days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-12-02',
+    start_day: generate_date_string(4),
     start_time: '00:30',
-    end_day: '2019-12-02',
+    end_day: generate_date_string(4),
     end_time: '05:00',
     note: "not even 5 hours, waking up to the alarm was awful",
     rating: 1
@@ -81,9 +87,9 @@ Dream.create({
 
 back5days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-11-30',
+    start_day: generate_date_string(6),
     start_time: '22:45',
-    end_day: '2019-12-01',
+    end_day: generate_date_string(5),
     end_time: '4:30',
     note: "not enough again",
     rating: 2
@@ -97,9 +103,9 @@ Dream.create({
 
 back6days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-11-30',
+    start_day: generate_date_string(6),
     start_time: '01:30',
-    end_day: '2019-11-30',
+    end_day: generate_date_string(6),
     end_time: '05:00',
     note: "horrible\nduration is everything and this did not cut it",
     rating: 1
@@ -113,9 +119,9 @@ Dream.create({
 
 back7days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-11-28',
+    start_day: generate_date_string(8),
     start_time: '23:10',
-    end_day: '2019-11-29',
+    end_day: generate_date_string(7),
     end_time: '06:00',
     note: "not bad, esp. compared to recent sessions",
     rating: 4
@@ -129,9 +135,9 @@ Dream.create({
 
 back8days = Sleep.create({
     user_id: andrew.id,
-    start_day: '2019-11-27',
+    start_day: generate_date_string(9),
     start_time: '23:55',
-    end_day: '2019-11-28',
+    end_day: generate_date_string(8),
     end_time: '06:00',
     note: "so-so, should be good enough for the day",
     rating: 3
