@@ -1,5 +1,4 @@
 # slumber-backend
 Ruby on Rails backend for Slumber
 
-## to-do:
-- probably should drop days and activities tables because YAGNI
+Frontend repo here: https://github.com/smilevideo/slumber-frontend
