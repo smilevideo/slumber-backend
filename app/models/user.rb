@@ -3,5 +3,4 @@ class User < ApplicationRecord
     validates :username, uniqueness: { case_sensitive: false }
 
     has_many :sleeps
-    has_many :days
 end
